@@ -3,6 +3,23 @@
 [![Travis](https://img.shields.io/travis/nativecode-dev/spelunker.svg?style=flat-square&label=travis)](https://travis-ci.org/nativecode-dev/spelunker)
 [![Coveralls branch](https://img.shields.io/coveralls/nativecode-dev/spelunker/master.svg?style=flat-square)](https://coveralls.io/r/nativecode-dev/spelunker?branch=master)
 
+# Install
+
+Get the latest development version from the `master` branch.
+
+```bash
+git clone https://github.com/nativecode-dev/spelunker.git
+```
+
+```bash
+cs spelunker
+npm run build
+```
+
+- Open a new Chrome tab using: [chrome://extensions/](chrome://extensions/)
+- Click on `Load unpacked extension...`
+- Choose the `dist` folder in `spelunker`.
+
 # License
 Copyright 2017 NativeCode Development <support@nativecode.com>
 
