@@ -12,7 +12,7 @@ git clone https://github.com/nativecode-dev/spelunker.git
 ```
 
 ```bash
-cs spelunker
+cd spelunker
 npm run build
 ```
 
