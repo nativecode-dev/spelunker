@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
     "diagnostics": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

@@ -1,7 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
+
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const less = new ExtractTextPlugin({
+  filename: '[name].css'
+})
 
 module.exports = {
   entry: {
@@ -9,7 +15,8 @@ module.exports = {
     content: path.join(__dirname, 'src/content.ts'),
     options: path.join(__dirname, 'src/options.ts'),
     popup: path.join(__dirname, 'src/popup.ts'),
-    vendor: ['moment', 'jquery']
+
+    bundle: ['moment', 'jquery']
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -18,12 +25,15 @@ module.exports = {
   module: {
     rules: [{
       exclude: /node_modules/,
-      test: /\.(html)$/,
-      use: ['html-loader']
-    }, {
-      exclude: /node_modules/,
-      test: /\.(json)$/,
-      use: ['file-loader']
+      test: /\.less$/,
+      use: less.extract({
+        use: [{
+          loader: 'css-loader'
+        }, {
+          loader: 'less-loader'
+        }],
+        fallback: 'style-loader'
+      })
     }, {
       exclude: /node_modules/,
       test: /\.tsx?$/,
@@ -35,25 +45,26 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'bundle',
+      filename: 'bundle.js',
       minChunks: Infinity
     }),
     new CopyWebpackPlugin([{
       from: 'src/manifest.json',
       to: path.join(__dirname, 'dist', 'manifest.json')
     }, {
-      from: 'src/icon.png',
-      to: path.join(__dirname, 'dist', 'icon.png')
+      from: 'src/assets/**/*.png',
+      to: path.join(__dirname, 'dist', 'assets', '[name].[ext]')
     }]),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'options.html'),
       filename: 'options.html',
-      chunks: ['options']
+      chunks: ['bundle', 'options']
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'popup.html'),
       filename: 'popup.html',
-      chunks: ['popup']
+      chunks: ['bundle', 'popup']
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]

@@ -3,22 +3,35 @@
   "description": "Spelunker",
   "manifest_version": 2,
   "name": "Spelunker",
-  "version": "0.1",
+  "version": "0.1.0",
   "content_scripts": [{
     "matches": [
       "<all_urls>"
     ],
-    "js": ["content.js", "vendor.js"]
+    "js": ["bundle.js", "content.js"]
   }],
   "background": {
     "scripts": ["background.js"]
   },
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "assets/icon.png",
     "popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/icon-16.png",
+    "24": "assets/icon-24.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "64": "assets/icon-64.png"
   },
   "options_ui": {
     "chrome_style": true,
     "page": "options.html"
-  }
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "system.display",
+    "tabs"
+  ]
 }

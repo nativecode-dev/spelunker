@@ -1,8 +1,16 @@
 import * as $ from 'jquery'
 
-const listener = (message: string, sender: chrome.runtime.MessageSender, response: (response: any) => void) => {
-  console.log(sender.url)
-  response(sender.url)
+$('form, form input').each((index: number, element: HTMLElement): void => {
+  $(element).addClass('pls-selectable')
+  console.log(element)
+});
+
+const hoverIn = (target: JQuery.Event<HTMLElement, null>): void => {
+  $(target).addClass('pls-selected')
 }
 
-chrome.runtime.onMessage.addListener(listener)
+const hoverOut = (target: JQuery.Event<HTMLElement, null>): void => {
+  $(target).removeClass('pls-selected')
+}
+
+$('.pls-selectable').hover(hoverIn, hoverOut)
