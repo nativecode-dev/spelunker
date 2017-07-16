@@ -1,0 +1,7 @@
+{
+  "extends": "standard",
+  "overrides": {
+    "files": ["webpack.config.js", "tests/**/*.js"],
+    "excludedFiles": "dist/**/*.js"
+  }
+}

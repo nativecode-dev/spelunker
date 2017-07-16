@@ -1,0 +1,51 @@
+{
+  "author": "support@nativecode.com",
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/spelunker/issues"
+  },
+  "description": "Creates scraper definitions.",
+  "homepage": "https://github.com/nativecode-dev/spelunker#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "spelunker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativecode-dev/spelunker.git"
+  },
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.47",
+    "@types/jquery": "^3.2.8",
+    "@types/node": "^8.0.13",
+    "chai": "^4.1.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.0.1",
+    "eslint": "^4.2.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.29.0",
+    "micromustache": "^5.2.0",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "rimraf": "^2.6.1",
+    "ts-loader": "^2.2.2",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1",
+    "webpack": "^3.2.0"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js --progress --profile --colors",
+    "prebuild": "npm run clean",
+    "clean": "rimraf dist/",
+    "test": "cross-env DEBUG= nyc mocha --recursive tests/"
+  }
+}
