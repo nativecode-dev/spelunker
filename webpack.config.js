@@ -16,7 +16,7 @@ module.exports = {
     options: path.join(__dirname, 'src/options.ts'),
     popup: path.join(__dirname, 'src/popup.ts'),
 
-    bundle: ['moment', 'jquery']
+    bundle: ['jquery']
   },
   output: {
     path: path.join(__dirname, 'dist'),

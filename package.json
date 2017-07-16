@@ -14,8 +14,7 @@
   },
   "version": "0.1.0",
   "dependencies": {
-    "jquery": "^3.2.1",
-    "moment": "^2.18.1"
+    "jquery": "^3.2.1"
   },
   "devDependencies": {
     "@types/chrome": "0.0.47",
@@ -50,7 +49,11 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --progress --profile --colors",
     "prebuild": "npm run clean",
+    "postbuild": "npm run lint",
+    "lint": "tslint src/",
     "clean": "rimraf dist/",
-    "test": "cross-env DEBUG= nyc mocha --recursive tests/"
+    "test": "cross-env DEBUG= nyc mocha --recursive tests/",
+    "pretest": "npm run build",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   }
 }
