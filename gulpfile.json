@@ -1,4 +1,9 @@
 {
+  "options": {
+    "browserify": {
+      "insertGlobals": true
+    }
+  },
   "source": {
     "html": ["src/**/*.html"],
     "manifest": ["src/manifest.json"],

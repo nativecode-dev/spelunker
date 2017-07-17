@@ -33,7 +33,6 @@ const config = () => {
 
 gulp.task('build:bundle', ['build:scss', 'build:ts'], () => {
   return gulp.src('./bundle.config.js')
-    .pipe(plugins.debug({ title: 'bundle' }))
     .pipe(plugins.bundleAssets())
     .pipe(plugins.bundleAssets.results($.target.dest))
     .pipe(gulp.dest($.target.dest))
@@ -56,7 +55,7 @@ gulp.task('build:manifest', ['build:bundle'], () => {
 
 gulp.task('build:png', () => {
   return gulp.src($.source.png)
-    .pipe(plugins.debug({ debug: '.png' }))
+    .pipe(plugins.debug({ title: '.png' }))
     .pipe(gulp.dest($.target.dest))
 })
 
