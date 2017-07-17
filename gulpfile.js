@@ -70,6 +70,8 @@ gulp.task('build:ts', () => {
   return gulp.src($.source.ts)
     .pipe(plugins.debug({ title: '.ts' }))
     .pipe(typescript(tsconfig.compilerOptions))
+    .js.pipe(plugins.browserify($.options.browserify))
+    .pipe(plugins.uglify())
     .pipe(gulp.dest($.target.dest))
 })
 
