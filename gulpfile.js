@@ -4,48 +4,24 @@ const plugins = require('gulp-load-plugins')(gulp)
 const tsconfig = require('./tsconfig.json')
 const typescript = require('gulp-typescript')
 
-const source = (source) => {
-  const pattern = /src=['"]?([\w\\.-]+)['"]?/
-  let matches = pattern.exec(source)
-  return matches ? matches[1] : matches
-}
-
 const config = () => {
   const config = Object.assign({}, $)
-
-  const bundle = require('./dist/bundle.result.json')
   const pkg = require('./package.json')
-
   const args = [
     { tsconfig },
-    { package: pkg },
-    {
-      bundle: {
-        vendor: {
-          scripts: bundle.vendor.scripts,
-          source: source(bundle.vendor.scripts)
-        }
-      }
-    }
+    { package: pkg }
   ]
   return Object.assign(config, ...args)
 }
 
-gulp.task('build:bundle', ['build:scss', 'build:ts'], () => {
-  return gulp.src('./bundle.config.js')
-    .pipe(plugins.bundleAssets())
-    .pipe(plugins.bundleAssets.results($.target.dest))
-    .pipe(gulp.dest($.target.dest))
-})
-
-gulp.task('build:html', ['build:bundle'], () => {
+gulp.task('build:html', () => {
   return gulp.src($.source.html)
     .pipe(plugins.debug({ title: '.html' }))
     .pipe(plugins.mustache(config()))
     .pipe(gulp.dest($.target.dest))
 })
 
-gulp.task('build:manifest', ['build:bundle'], () => {
+gulp.task('build:manifest', () => {
   return gulp.src($.source.manifest)
     .pipe(plugins.debug({ title: 'manifest.json' }))
     .pipe(plugins.mustache(config()))
@@ -70,16 +46,14 @@ gulp.task('build:ts', () => {
   return gulp.src($.source.ts)
     .pipe(plugins.debug({ title: '.ts' }))
     .pipe(typescript(tsconfig.compilerOptions))
-    .js.pipe(plugins.browserify($.options.browserify))
-    .pipe(plugins.uglify())
     .pipe(gulp.dest($.target.dest))
 })
 
-gulp.task('build', [
-  'build:bundle',
-  'build:html',
-  'build:manifest',
-  'build:png',
-  'build:scss',
-  'build:ts'
-])
+gulp.task('build:browserify', ['build:html', 'build:manifest', 'build:png', 'build:scss', 'build:ts'], () => {
+  return gulp.src('./dist/**/*.js')
+    .pipe(plugins.debug({ title: 'browserify' }))
+    .pipe(plugins.browserify())
+    .pipe(gulp.dest($.target.dest))
+})
+
+gulp.task('build', ['build:browserify'])

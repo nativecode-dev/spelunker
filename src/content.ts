@@ -1,5 +1,7 @@
 import * as $ from 'jquery'
 
+import { Highlight } from './types/ElementHighlighter'
+
 const log = console.log
 
 $('form, form input').each((index: number, element: HTMLElement): void => {
