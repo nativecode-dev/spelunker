@@ -19,10 +19,10 @@ const config = () => {
   const args = [
     { tsconfig },
     { package: pkg },
-    { bundle },
     {
       bundle: {
         vendor: {
+          scripts: bundle.vendor.scripts,
           source: source(bundle.vendor.scripts)
         }
       }
