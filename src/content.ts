@@ -1,12 +1,3 @@
-import './styles/spelunker.scss'
-
-import './assets/icon-16.png'
-import './assets/icon-24.png'
-import './assets/icon-32.png'
-import './assets/icon-48.png'
-import './assets/icon-64.png'
-import './assets/icon.png'
-
 import * as $ from 'jquery'
 
 $('form, form input').each((index: number, element: HTMLElement): void => {

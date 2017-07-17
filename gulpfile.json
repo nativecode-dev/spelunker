@@ -1,6 +1,7 @@
 {
   "source": {
     "html": ["src/**/*.html"],
+    "manifest": ["src/manifest.json"],
     "png": ["src/**/*.png"],
     "scss": ["src/**/*.scss"],
     "ts": ["src/**/*.ts"]

@@ -4,27 +4,30 @@ const plugins = require('gulp-load-plugins')(gulp)
 const tsconfig = require('./tsconfig.json')
 const typescript = require('gulp-typescript')
 
-const env = process.env.NODE_ENV || 'development'
+const config = () => {
+  const bundle = { bundle: require('./dist/bundle.result.json') }
+  const pkg = { package: require('./package.json') }
+  return Object.assign({}, $, { tsconfig }, pkg, bundle)
+}
 
-const pkg = { package: require('./package.json') }
-const config = Object.assign({}, $, { tsconfig }, pkg)
-
-gulp.task('build:bundle', () => {
+gulp.task('build:bundle', ['build:scss', 'build:ts'], () => {
   return gulp.src('./bundle.config.js')
+    .pipe(plugins.debug({ title: 'bundle' }))
     .pipe(plugins.bundleAssets())
-    .pipe(plugins.bundleAssets.results($.target.bundle))
+    .pipe(plugins.bundleAssets.results($.target.dest))
     .pipe(gulp.dest($.target.dest))
 })
 
-gulp.task('build:html', ['build:ts'], () => {
+gulp.task('build:html', ['build:bundle'], () => {
   return gulp.src($.source.html)
     .pipe(plugins.debug({ title: '.html' }))
     .pipe(plugins.mustache(config))
     .pipe(gulp.dest($.target.dest))
 })
 
-gulp.task('build:manifest', () => {
-  return gulp.src(`./src/manifest/${env}.json`)
+gulp.task('build:manifest', ['build:bundle'], () => {
+  return gulp.src($.source.manifest)
+    .pipe(plugins.debug({ title: 'manifest.json' }))
     .pipe(plugins.mustache(config))
     .pipe(plugins.rename('manifest.json'))
     .pipe(gulp.dest($.target.dest))
@@ -51,6 +54,7 @@ gulp.task('build:ts', () => {
 })
 
 gulp.task('build', [
+  'build:bundle',
   'build:html',
   'build:manifest',
   'build:png',
