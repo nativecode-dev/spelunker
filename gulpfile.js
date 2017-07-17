@@ -21,14 +21,14 @@ gulp.task('build:bundle', ['build:scss', 'build:ts'], () => {
 gulp.task('build:html', ['build:bundle'], () => {
   return gulp.src($.source.html)
     .pipe(plugins.debug({ title: '.html' }))
-    .pipe(plugins.mustache(config))
+    .pipe(plugins.mustache(config()))
     .pipe(gulp.dest($.target.dest))
 })
 
 gulp.task('build:manifest', ['build:bundle'], () => {
   return gulp.src($.source.manifest)
     .pipe(plugins.debug({ title: 'manifest.json' }))
-    .pipe(plugins.mustache(config))
+    .pipe(plugins.mustache(config()))
     .pipe(plugins.rename('manifest.json'))
     .pipe(gulp.dest($.target.dest))
 })
