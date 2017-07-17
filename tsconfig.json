@@ -4,7 +4,7 @@
     "diagnostics": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "amd",
+    "module": "commonjs",
     "noImplicitAny": true,
     "pretty": true,
     "sourceMap": true,

@@ -1,8 +1,8 @@
 {
   "extends": "standard",
   "overrides": [{
-    "files": ["webpack/**/*.js", "tests/**/*.js"],
-    "excludedFiles": ["dist/**/*.js", "src/**/*.ts"],
+    "files": ["*.js", "tests/**/*.js"],
+    "excludedFiles": "dist/**/*",
     "rules": {
       "space-before-function-paren": false
     }

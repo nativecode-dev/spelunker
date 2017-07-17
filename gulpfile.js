@@ -4,10 +4,31 @@ const plugins = require('gulp-load-plugins')(gulp)
 const tsconfig = require('./tsconfig.json')
 const typescript = require('gulp-typescript')
 
+const source = (source) => {
+  const pattern = /src=['"]?([\w\\.-]+)['"]?/
+  let matches = pattern.exec(source)
+  return matches ? matches[1] : matches
+}
+
 const config = () => {
-  const bundle = { bundle: require('./dist/bundle.result.json') }
-  const pkg = { package: require('./package.json') }
-  return Object.assign({}, $, { tsconfig }, pkg, bundle)
+  const config = Object.assign({}, $)
+
+  const bundle = require('./dist/bundle.result.json')
+  const pkg = require('./package.json')
+
+  const args = [
+    { tsconfig },
+    { package: pkg },
+    { bundle },
+    {
+      bundle: {
+        vendor: {
+          source: source(bundle.vendor.scripts)
+        }
+      }
+    }
+  ]
+  return Object.assign(config, ...args)
 }
 
 gulp.task('build:bundle', ['build:scss', 'build:ts'], () => {
@@ -49,7 +70,7 @@ gulp.task('build:scss', () => {
 gulp.task('build:ts', () => {
   return gulp.src($.source.ts)
     .pipe(plugins.debug({ title: '.ts' }))
-    .pipe(typescript())
+    .pipe(typescript(tsconfig.compilerOptions))
     .pipe(gulp.dest($.target.dest))
 })
 

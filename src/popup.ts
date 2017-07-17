@@ -1,3 +1,3 @@
 import './popup.html'
 
-export class Popup { }
+class Popup { }
