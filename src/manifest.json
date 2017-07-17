@@ -1,5 +1,5 @@
 {
-  "author": "PropLogix",
+  "author": "support@nativecode.com",
   "description": "Spelunker",
   "manifest_version": 2,
   "name": "Spelunker",
@@ -8,7 +8,8 @@
     "matches": [
       "<all_urls>"
     ],
-    "js": ["bundle.js", "content.js"]
+    "css": ["styles/spelunker.css"],
+    "js": ["content.js"]
   }],
   "background": {
     "scripts": ["background.js"]

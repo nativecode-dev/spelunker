@@ -1,0 +1,12 @@
+{
+  "source": {
+    "html": ["src/**/*.html"],
+    "png": ["src/**/*.png"],
+    "scss": ["src/**/*.scss"],
+    "ts": ["src/**/*.ts"]
+  },
+  "target": {
+    "bundle": "dist/bundle.manifest.json",
+    "dest": "dist"
+  }
+}
