@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "diagnostics": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -10,5 +10,11 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2015"
-  }
+  },
+  "exclude": [
+    "node_modules/"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
 }

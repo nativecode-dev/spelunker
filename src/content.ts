@@ -1,6 +1,5 @@
-import * as $ from 'jquery'
-
-import { FormHighlighter, FormHighlighters } from './types/index'
+import { FormHighlighters } from './types/FormBinder'
+import { FormHighlighter } from './types/FormHighlighter'
 
 const log = console.log
 const highlighters: FormHighlighter[] = FormHighlighters()
