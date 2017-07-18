@@ -9,10 +9,11 @@
     "manifest": ["src/manifest.json"],
     "png": ["src/**/*.png"],
     "scss": ["src/**/*.scss"],
-    "ts": ["src/**/*.ts"]
+    "ts": ["src/*.ts"]
   },
   "target": {
     "bundle": "dist/bundle.manifest.json",
-    "dest": "dist"
+    "dest": "dist",
+    "js": ["dist/**/*.js"]
   }
 }

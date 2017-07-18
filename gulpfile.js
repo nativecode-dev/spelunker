@@ -50,7 +50,7 @@ gulp.task('build:ts', () => {
 })
 
 gulp.task('build:browserify', ['build:html', 'build:manifest', 'build:png', 'build:scss', 'build:ts'], () => {
-  return gulp.src('./dist/**/*.js')
+  return gulp.src($.target.js)
     .pipe(plugins.debug({ title: 'browserify' }))
     .pipe(plugins.browserify())
     .pipe(gulp.dest($.target.dest))

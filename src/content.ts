@@ -1,22 +1,11 @@
 import * as $ from 'jquery'
 
-import { Highlight } from './types/ElementHighlighter'
+import { FormHighlighters } from './types/FormBinder'
+import { FormHighlighter } from './types/FormHighlighter'
 
 const log = console.log
+const highlighters: FormHighlighter[] = FormHighlighters()
 
-$('form, form input').each((index: number, element: HTMLElement): void => {
-  log(element)
-  $(element).addClass('spelunker-selectable')
-});
-
-const hoverIn = (target: JQuery.Event<HTMLElement, null>): void => {
-  log(target)
-  $(target).addClass('spelunker-selected')
+for (const highlighter of highlighters) {
+  log(highlighter)
 }
-
-const hoverOut = (target: JQuery.Event<HTMLElement, null>): void => {
-  log(target)
-  $(target).removeClass('spelunker-selected')
-}
-
-$('.spelunker-selectable').hover(hoverIn, hoverOut)
