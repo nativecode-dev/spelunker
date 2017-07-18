@@ -9,7 +9,10 @@
     "default_popup": "popup.html"
   },
   "content_scripts": [{
-    "matches": ["<all_urls>"],
+    "matches": [
+      "https://qpublic.schneidercorp.com/*",
+      "https://qpublic.schneidercorp.com/Application.aspx?AppID=829&LayerID=15004&PageTypeID=2&PageID=6748"
+    ],
     "css": ["styles.css"],
     "js": ["vendor.js", "content.js"]
   }],

@@ -11,7 +11,7 @@ export const CssName = (...names: string[]): string => {
 export type Highlighter = (jquery: JQuery<HTMLElement>) => JQuery<HTMLElement>
 export const Highlighters: Map<string, Highlighter> = new Map<string, Highlighter>()
 
-export const Highlight = (jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
+export const EnableHighlighting = (jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
   let current = jquery
   for (const highlighter of Highlighters.values()) {
     current = highlighter(current)
@@ -19,7 +19,7 @@ export const Highlight = (jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
   return current
 }
 
-export const HighlightOnly = (selector: string, jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
+export const EnableHighlightingFor = (selector: string, jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
   const highlighter = Highlighters.get(selector)
   if (highlighter) {
     return highlighter(jquery)

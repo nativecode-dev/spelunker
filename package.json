@@ -19,6 +19,7 @@
     "uuidjs": "^3.5.3"
   },
   "devDependencies": {
+    "@nofrills/lincoln-console": "^0.1.1",
     "@types/chai": "^4.0.1",
     "@types/chrome": "0.0.47",
     "@types/extract-text-webpack-plugin": "^2.1.0",

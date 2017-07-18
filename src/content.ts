@@ -1,5 +1,4 @@
-import { FormHighlighters } from './types/FormBinder'
-import { FormHighlighter } from './types/FormHighlighter'
+import { FormHighlighter, FormHighlighters } from './types'
 
 const log = console.log
 const highlighters: FormHighlighter[] = FormHighlighters()

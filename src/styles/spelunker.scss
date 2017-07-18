@@ -1,6 +1,15 @@
 .spelunker-selectable {
-    .spelunker-selected {
-        border: 1px solid black;
+    cursor: 'pointer';
+    .spelunker-hilite {
+        background-color: cadetblue;
+    }
+     :hover {
+        .spelunker-div {
+            background-color: darken(yellow, 0.75);
+        }
+        .spelunker-form {
+            background-color: yellow;
+        }
     }
 }
 
