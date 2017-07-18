@@ -9,42 +9,8 @@ const NODE_ENV: string = process.env.NODE_ENV || 'release'
 const env: string = NODE_ENV.toLowerCase() === 'release' ? 'release' : 'debug'
 const root: string = path.resolve(__dirname)
 
-const html: webpack.Configuration = {
-  cache: true,
-  context: root,
-  entry: {
-    options: './src/options.html',
-    popup: './src/popup.html',
-    styles: './src/styles/spelunker.scss'
-  },
-  module: {
-    rules: [{
-      test: /\.x?html?$/,
-      use: {
-        loader: 'html-loader'
-      }
-    }, {
-      test: /\.scss$/,
-      use: ExtractText.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'sass-loader']
-      })
-    }]
-  },
-  output: {
-    filename: '[name].js',
-    path: path.join(root, 'dist')
-  },
-  plugins: [
-    new ExtractText('[name].css'),
-    new HtmlWebpack({
-      filename: '[name].html'
-    })
-  ]
-}
-
 const typescript: webpack.Configuration = {
-  cache: true,
+  cache: env === 'release',
   context: root,
   entry: {
     background: './src/background.ts',
@@ -55,13 +21,28 @@ const typescript: webpack.Configuration = {
   },
   module: {
     rules: [{
+      exclude: /node_modules/,
+      test: /\.x?html?$/,
+      use: ['html-loader']
+    }, {
+      exclude: /node_modules/,
+      test: /\.json$/,
+      use: ['file-loader?name=[name].[ext]']
+    }, {
+      exclude: /node_modules/,
+      test: /\.png$/,
+      use: ['file-loader?name=icons/[name].[ext]', 'img-loader']
+    }, {
+      exclude: /node_modules/,
+      test: /\.scss$/,
+      use: ExtractText.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'sass-loader']
+      })
+    }, {
+      exclude: /node_modules/,
       test: /\.ts$/,
-      use: {
-        loader: 'ts-loader',
-        options: {
-          declaration: false
-        }
-      }
+      use: ['ts-loader']
     }]
   },
   output: {
@@ -72,6 +53,19 @@ const typescript: webpack.Configuration = {
     new webpack.optimize.CommonsChunkPlugin({
       minChunks: Infinity,
       name: 'vendor'
+    }),
+    new ExtractText({
+      filename: 'styles.css'
+    }),
+    new HtmlWebpack({
+      excludeChunks: ['background', 'content', 'popup'],
+      filename: 'options.html',
+      title: 'spelunker'
+    }),
+    new HtmlWebpack({
+      excludeChunks: ['background', 'content', 'options'],
+      filename: 'popup.html',
+      title: 'spelunker'
     })
   ],
   resolve: {
@@ -79,6 +73,6 @@ const typescript: webpack.Configuration = {
   }
 }
 
-const configuration: webpack.Configuration[] = [html, typescript]
+const configuration: webpack.Configuration[] = [typescript]
 
 export default configuration
