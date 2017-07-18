@@ -30,8 +30,14 @@ export const HighlightOnly = (selector: string, jquery: JQuery<HTMLElement>): JQ
 const DIV: string = 'div'
 const FORM: string = 'form'
 
-const Closest = (tag: string, jquery: JQuery<HTMLElement>): JQuery<HTMLElement> =>
-  jquery.closest(tag).addClass(`.spelunker-hilite .spelunker-${tag}`)
+const Closest = (tag: string, jquery: JQuery<HTMLElement>): JQuery<HTMLElement> => {
+  const name: string = CssName('can-hilite')
+  const closest = jquery.closest(tag)
+  if (closest.hasClass(name) === false) {
+    return closest.addClass(name)
+  }
+  return closest
+}
 
 Highlighters.set(DIV, (jquery) => Closest(DIV, jquery))
 Highlighters.set(FORM, (jquery) => Closest(FORM, jquery))
