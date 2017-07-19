@@ -4,9 +4,9 @@ import * as webpack from 'webpack'
 import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
 
-const NODE_ENV: string = process.env.NODE_ENV || 'release'
+const BUILD: string = process.env.BUILD || 'release'
 
-const env: string = NODE_ENV.toLowerCase() === 'release' ? 'release' : 'debug'
+const env: string = BUILD.toLowerCase() === 'release' ? 'release' : 'debug'
 const root: string = path.resolve(__dirname)
 
 const minify = {

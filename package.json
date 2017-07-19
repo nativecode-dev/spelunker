@@ -64,7 +64,7 @@
     "webpack": "^3.3.0"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=release webpack",
+    "build": "cross-env BUILD=release webpack",
     "prebuild": "npm run lint",
     "lint": "tslint src/",
     "prelint": "npm run clean",
@@ -75,6 +75,6 @@
     "pretest": "npm run build",
     "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "watch": "cross-env NODE_ENV=release webpack -w"
+    "watch": "cross-env BUILD=release webpack -w"
   }
 }
