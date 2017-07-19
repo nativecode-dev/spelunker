@@ -75,6 +75,7 @@
     "pretest": "npm run build",
     "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
     "precoverage": "npm run build",
+    "postcoverage": "npm run coveralls",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "watch": "cross-env BUILD=release webpack -w"
   }
