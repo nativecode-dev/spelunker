@@ -61,22 +61,19 @@
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1",
-    "webpack": "^3.3.0"
+    "webpack": "^3.3.0",
+    "webpack-cleanup-plugin": "^0.5.1"
   },
   "scripts": {
-    "build": "cross-env BUILD=release webpack",
+    "build": "./node_modules/.bin/cross-env BUILD=release webpack",
     "prebuild": "npm run lint",
-    "lint": "tslint src/",
-    "prelint": "npm run clean",
-    "clean": "rimraf .nyc_output && rimraf coverage && rimraf dist/*",
-    "cleanall": "rimraf node_modules",
-    "precleanall": "npm run clean && rimraf dist",
-    "test": "cross-env DEBUG= nyc mocha --recursive tests/",
+    "lint": "./node_modules/.bin/tslint src/",
+    "test": "./node_modules/.bin/cross-env DEBUG= ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive tests/",
     "pretest": "npm run build",
-    "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
+    "coverage": "./node_modules/.bin/cross-env DEBUG= ./node_modules/.bin/nyc --reporter=teamcity ./node_modules/.bin/mocha --recursive tests/",
     "precoverage": "npm run build",
     "postcoverage": "npm run coveralls",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "watch": "cross-env BUILD=release webpack -w"
+    "coveralls": "./node_modules/.bin/nyc npm test && ./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls",
+    "watch": "./node_modules/.bin/cross-env BUILD=release ./node_modules/.bin/webpack -w"
   }
 }

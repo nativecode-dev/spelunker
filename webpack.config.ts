@@ -3,6 +3,7 @@ import * as webpack from 'webpack'
 
 import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
+import * as WebpackCleanup from 'webpack-cleanup-plugin'
 
 const BUILD: string = process.env.BUILD || 'release'
 
@@ -101,6 +102,9 @@ const typescript: webpack.Configuration = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       include: /vendor\.js$/
+    }),
+    new WebpackCleanup({
+      preview: true,
     })
   ],
   resolve: {
