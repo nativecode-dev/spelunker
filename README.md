@@ -22,6 +22,7 @@ npm run build
 - Choose the `dist` folder in `spelunker`.
 
 # License
+
 Copyright 2017 NativeCode Development <support@nativecode.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
