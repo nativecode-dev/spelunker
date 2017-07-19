@@ -21,7 +21,6 @@ npm run build
 - Click on `Load unpacked extension...`
 - Choose the `dist` folder in `spelunker`.
 
-
 # License
 
 Copyright 2017 NativeCode Development <support@nativecode.com>
