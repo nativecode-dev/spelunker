@@ -98,6 +98,9 @@ const typescript: webpack.Configuration = {
       template: './src/template.html',
       title: 'spelunker',
       xhtml: true,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      include: /vendor\.js$/
     })
   ],
   resolve: {
