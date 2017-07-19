@@ -1,5 +1,6 @@
 # spelunker
 
+[![TeamCity (simple build status)](https://img.shields.io/teamcity/http/build.nativecode.com/s/nativecode_opensource_nofrills_spelunker_continous.svg?style=flat-square)](https://build.nativecode.com/viewType.html?buildTypeId=nativecode_opensource_nofrills_spelunker_continous)
 [![Travis](https://img.shields.io/travis/nativecode-dev/spelunker.svg?style=flat-square&label=travis)](https://travis-ci.org/nativecode-dev/spelunker)
 [![Coveralls branch](https://img.shields.io/coveralls/nativecode-dev/spelunker/master.svg?style=flat-square)](https://coveralls.io/r/nativecode-dev/spelunker?branch=master)
 
