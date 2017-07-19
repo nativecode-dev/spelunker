@@ -15,9 +15,14 @@ const typescript: webpack.Configuration = {
   entry: {
     background: './src/background.ts',
     content: './src/content.ts',
-    options: './src/options.ts',
-    popup: './src/popup.ts',
+    options: './src/options.tsx',
+    popup: './src/popup.tsx',
     vendor: ['jquery', 'string-hash', 'uuidjs']
+  },
+  externals: {
+    'nofrills-lincoln-console': '@nofrills/lincoln-console',
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   },
   module: {
     rules: [{
@@ -41,8 +46,13 @@ const typescript: webpack.Configuration = {
       })
     }, {
       exclude: /node_modules/,
-      test: /\.ts$/,
+      test: /\.tsx?$/,
       use: ['ts-loader']
+    }, {
+      enforce: 'pre',
+      exclude: /node_modules/,
+      test: /\.js$/,
+      use: 'source-map-loader'
     }]
   },
   output: {
@@ -60,16 +70,18 @@ const typescript: webpack.Configuration = {
     new HtmlWebpack({
       excludeChunks: ['background', 'content', 'popup'],
       filename: 'options.html',
+      template: './src/template.html',
       title: 'spelunker'
     }),
     new HtmlWebpack({
       excludeChunks: ['background', 'content', 'options'],
       filename: 'popup.html',
+      template: './src/template.html',
       title: 'spelunker'
     })
   ],
   resolve: {
-    extensions: ['.js', '.ts']
+    extensions: ['.js', '.ts', '.tsx']
   }
 }
 
