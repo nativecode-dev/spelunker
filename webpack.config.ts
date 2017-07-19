@@ -9,6 +9,22 @@ const NODE_ENV: string = process.env.NODE_ENV || 'release'
 const env: string = NODE_ENV.toLowerCase() === 'release' ? 'release' : 'debug'
 const root: string = path.resolve(__dirname)
 
+const minify = {
+  caseSensitive: true,
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+  keepClosingSlash: true,
+  minifyCSS: true,
+  minifyJS: true,
+  minifyURLs: true,
+  preserveLineBreaks: true,
+  quoteCharacter: '"',
+  removeComments: true,
+  removeEmptyAttributes: true,
+  removeRedundantAttributes: true,
+  useShortDoctype: true,
+}
+
 const typescript: webpack.Configuration = {
   cache: env === 'release',
   context: root,
@@ -17,18 +33,18 @@ const typescript: webpack.Configuration = {
     content: './src/content.ts',
     options: './src/options.tsx',
     popup: './src/popup.tsx',
-    vendor: ['jquery', 'string-hash', 'uuidjs']
-  },
-  externals: {
-    'nofrills-lincoln-console': '@nofrills/lincoln-console',
-    'react': 'React',
-    'react-dom': 'ReactDOM'
+    vendor: ['jquery', 'react', 'react-dom', 'string-hash', 'uuidjs'],
   },
   module: {
     rules: [{
       exclude: /node_modules/,
       test: /\.x?html?$/,
-      use: ['html-loader']
+      use: [{
+        loader: 'html-loader',
+        options: {
+          minimize: true,
+        }
+      }]
     }, {
       exclude: /node_modules/,
       test: /\.json$/,
@@ -53,31 +69,35 @@ const typescript: webpack.Configuration = {
       exclude: /node_modules/,
       test: /\.js$/,
       use: 'source-map-loader'
-    }]
+    }],
   },
   output: {
     filename: '[name].js',
-    path: path.join(root, 'dist')
+    path: path.join(root, 'dist'),
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       minChunks: Infinity,
-      name: 'vendor'
+      name: 'vendor',
     }),
     new ExtractText({
-      filename: 'styles.css'
+      filename: 'styles.css',
     }),
     new HtmlWebpack({
       excludeChunks: ['background', 'content', 'popup'],
       filename: 'options.html',
+      minify,
       template: './src/template.html',
-      title: 'spelunker'
+      title: 'spelunker',
+      xhtml: true,
     }),
     new HtmlWebpack({
       excludeChunks: ['background', 'content', 'options'],
       filename: 'popup.html',
+      minify,
       template: './src/template.html',
-      title: 'spelunker'
+      title: 'spelunker',
+      xhtml: true,
     })
   ],
   resolve: {
