@@ -73,6 +73,7 @@
     "precleanall": "npm run clean && rimraf dist",
     "test": "cross-env DEBUG= nyc mocha --recursive tests/",
     "pretest": "npm run build",
+    "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "watch": "cross-env NODE_ENV=release webpack -w"
   }
