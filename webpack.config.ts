@@ -103,9 +103,6 @@ const typescript: webpack.Configuration = {
     new webpack.optimize.UglifyJsPlugin({
       include: /vendor\.js$/
     }),
-    new WebpackCleanup({
-      preview: true,
-    })
   ],
   resolve: {
     extensions: ['.js', '.ts', '.tsx']
