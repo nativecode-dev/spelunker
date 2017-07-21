@@ -1,4 +1,5 @@
-export * from './Chrome'
-export * from './Highlighting'
+export * from './Chrome/Index'
+export * from './Highlighting/Index'
+
 export * from './Logging'
 export * from './Utils'

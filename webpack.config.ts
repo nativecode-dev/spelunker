@@ -103,7 +103,7 @@ const configuration: webpack.Configuration = {
     }, {
       exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: ['ts-loader?' + JSON.stringify({ ignoreDiagnostics: [2345, 2307] })]
+      use: ['ts-loader']
     }, {
       enforce: 'pre',
       exclude: /node_modules/,
