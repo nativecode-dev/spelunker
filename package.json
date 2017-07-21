@@ -15,6 +15,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@nofrills/lincoln-console": "^0.1.1",
+    "bluebird": "^3.5.0",
     "jquery": "^3.2.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -22,6 +23,7 @@
     "uuidjs": "^3.5.3"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.8",
     "@types/chai": "^4.0.1",
     "@types/chrome": "0.0.47",
     "@types/extract-text-webpack-plugin": "^2.1.0",
@@ -35,6 +37,7 @@
     "@types/uuidjs": "^3.3.1",
     "@types/webpack": "^3.0.4",
     "chai": "^4.1.0",
+    "clean-webpack-plugin": "^0.1.16",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
@@ -74,6 +77,7 @@
     "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
     "precoverage": "npm run build",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "watch": "cross-env BUILD=release webpack -w"
+    "watch": "cross-env BUILD=release webpack -w",
+    "prewatch": "npm run build"
   }
 }

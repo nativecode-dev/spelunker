@@ -1,7 +1,6 @@
 {
   "extends": "standard",
   "overrides": [{
-    "files": ["bundle.config.js", "gulpfile.js"],
     "excludedFiles": ["dist/**/*.js", "tests/**/*.js"],
     "rules": {
       "space-before-function-paren": false

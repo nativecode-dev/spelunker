@@ -1,6 +1,8 @@
+import * as fs from 'fs'
 import * as path from 'path'
 import * as webpack from 'webpack'
 
+import * as CleanWebpack from 'clean-webpack-plugin'
 import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
 import * as WebpackCleanup from 'webpack-cleanup-plugin'
@@ -9,32 +11,44 @@ const BUILD: string = process.env.BUILD || 'release'
 
 const env: string = BUILD.toLowerCase() === 'release' ? 'release' : 'debug'
 const root: string = path.resolve(__dirname)
+const config: any = JSON.parse(fs.readFileSync('./package.json').toString())
 
-const minify = {
-  caseSensitive: true,
-  collapseWhitespace: true,
-  conservativeCollapse: true,
-  keepClosingSlash: true,
-  minifyCSS: true,
-  minifyJS: true,
-  minifyURLs: true,
-  preserveLineBreaks: true,
-  quoteCharacter: '"',
-  removeComments: true,
-  removeEmptyAttributes: true,
-  removeRedundantAttributes: true,
-  useShortDoctype: true,
+const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+
+const Html = (name: string): HtmlWebpack.Config => {
+  return {
+    excludeChunks: ['background', 'content', name],
+    filename: `${name}.html`,
+    minify: {
+      caseSensitive: true,
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      keepClosingSlash: true,
+      minifyCSS: true,
+      minifyJS: true,
+      minifyURLs: true,
+      preserveLineBreaks: true,
+      quoteCharacter: '"',
+      removeComments: true,
+      removeEmptyAttributes: true,
+      removeRedundantAttributes: true,
+      useShortDoctype: true,
+    },
+    template: './src/public/template.html',
+    title: config.name,
+    xhtml: true,
+  }
 }
 
-const typescript: webpack.Configuration = {
+const configuration: webpack.Configuration = {
   cache: env === 'release',
   context: root,
   entry: {
-    background: './src/background.ts',
-    content: './src/content.ts',
-    options: './src/options.tsx',
-    popup: './src/popup.tsx',
-    vendor: ['jquery', 'react', 'react-dom', 'string-hash', 'uuidjs'],
+    background: './src/scripts/background.ts',
+    content: './src/scripts/content.ts',
+    options: './src/public/options.tsx',
+    popup: './src/public/popup.tsx',
+    vendor: Object.keys(config.dependencies),
   },
   module: {
     rules: [{
@@ -77,38 +91,20 @@ const typescript: webpack.Configuration = {
     path: path.join(root, 'dist'),
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
+    new CleanWebpack(['.nyc_output', 'coverage', 'dist']),
+    new CommonsChunkPlugin({
       minChunks: Infinity,
       name: 'vendor',
     }),
     new ExtractText({
       filename: 'styles.css',
     }),
-    new HtmlWebpack({
-      excludeChunks: ['background', 'content', 'popup'],
-      filename: 'options.html',
-      minify,
-      template: './src/template.html',
-      title: 'spelunker',
-      xhtml: true,
-    }),
-    new HtmlWebpack({
-      excludeChunks: ['background', 'content', 'options'],
-      filename: 'popup.html',
-      minify,
-      template: './src/template.html',
-      title: 'spelunker',
-      xhtml: true,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      include: /vendor\.js$/
-    }),
+    new HtmlWebpack(Html('options')),
+    new HtmlWebpack(Html('popup')),
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.tsx']
+    extensions: ['.js', '.scss', '.ts', '.tsx']
   }
 }
-
-const configuration: webpack.Configuration[] = [typescript]
 
 export default configuration

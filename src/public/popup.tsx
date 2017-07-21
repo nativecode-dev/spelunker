@@ -1,9 +1,9 @@
-import './styles/spelunker.scss'
+import '../styles/spelunker.scss'
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Popup } from './components/Popup';
+import { Popup } from '../components/Popup';
 
 ReactDOM.render(
   <Popup title="Popup" />,
