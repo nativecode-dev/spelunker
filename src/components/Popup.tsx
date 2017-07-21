@@ -1,7 +1,7 @@
 import * as JQuery from 'jquery'
 import * as React from 'react'
 
-import { Lincoln, Logger , Message, Messenger, Response } from '../scripts'
+import { Lincoln, Logger , Message, Messenger, Response } from '../scripts/Index'
 
 export interface IProperties {
   title: string

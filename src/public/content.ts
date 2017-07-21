@@ -1,4 +1,4 @@
-import { FormHighlighter, FormHighlighters } from '../scripts'
+import { FormHighlighter, FormHighlighters } from '../scripts/Index'
 
 const log = console.log
 const highlighters: FormHighlighter[] = FormHighlighters()
