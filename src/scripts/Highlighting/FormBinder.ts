@@ -1,7 +1,7 @@
 import * as JQuery from 'jquery'
 import * as uuid from 'uuidjs'
 
-import { StringHash } from '../utils'
+import { StringHash } from '../Utils'
 import { FormHighlighter } from './FormHighlighter'
 
 const BUTTON: string = 'button'

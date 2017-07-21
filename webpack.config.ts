@@ -12,7 +12,7 @@ class MyPlugin {
   public apply(compiler: webpack.Compiler): void {
     compiler.plugin('compilation', (...args: any[]): void => {
       compiler.plugin('optimize', (): void => {
-        this.log('optimize')
+        this.log('OPTIMIZE')
       })
     })
   }
@@ -68,8 +68,8 @@ const configuration: webpack.Configuration = {
   cache: env === 'release',
   context: root,
   entry: {
-    background: './src/scripts/Pages/background.ts',
-    content: './src/scripts/Pages/content.ts',
+    background: './src/public/background.ts',
+    content: './src/public/content.ts',
     options: './src/public/options.tsx',
     popup: './src/public/popup.tsx',
     vendor: Object.keys(config.dependencies),
