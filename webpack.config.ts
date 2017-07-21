@@ -7,13 +7,12 @@ import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
 import * as WebpackCleanup from 'webpack-cleanup-plugin'
 
-import { Lincoln, Logger } from './src/scripts'
-
 class MyPlugin {
+  private log = console.log
   public apply(compiler: webpack.Compiler): void {
     compiler.plugin('compilation', (...args: any[]): void => {
       compiler.plugin('optimize', (): void => {
-        Logger.debug('optimize')
+        this.log('optimize')
       })
     })
   }
