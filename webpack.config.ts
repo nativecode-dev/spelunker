@@ -5,6 +5,7 @@ import * as webpack from 'webpack'
 import * as CleanWebpack from 'clean-webpack-plugin'
 import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
+import * as JsonPostProcess from 'json-post-process-webpack-plugin'
 import * as WebpackCleanup from 'webpack-cleanup-plugin'
 
 class MyPlugin {
@@ -102,7 +103,7 @@ const configuration: webpack.Configuration = {
     }, {
       exclude: /node_modules/,
       test: /\.tsx?$/,
-      use: ['ts-loader']
+      use: ['ts-loader?' + JSON.stringify({ ignoreDiagnostics: [2345, 2307] })]
     }, {
       enforce: 'pre',
       exclude: /node_modules/,
@@ -122,6 +123,17 @@ const configuration: webpack.Configuration = {
     }),
     new ExtractText({
       filename: 'styles.css',
+    }),
+    new JsonPostProcess({
+      matchers: [{
+        action: (manifest) => {
+          manifest.description = config.description
+          manifest.name = config.name
+          manifest.version = config.version
+          return manifest
+        },
+        matcher: /manifest\.json$/,
+      }]
     }),
     ...CreateHtmlWebpackFiles()
   ],
