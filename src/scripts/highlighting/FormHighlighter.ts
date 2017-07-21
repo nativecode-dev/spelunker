@@ -1,8 +1,8 @@
 import * as JQuery from 'jquery'
 
+import { Lincoln, Logger } from '../Logging'
 import { FormBinder } from './FormBinder'
 import { CssId, CssName, EnableHighlighting } from './Highlighter'
-import { Lincoln, Logger } from './Logging'
 
 type Element = JQuery<HTMLElement>
 type Event = JQuery.Event<HTMLElement>

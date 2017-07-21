@@ -7,45 +7,70 @@ import * as ExtractText from 'extract-text-webpack-plugin'
 import * as HtmlWebpack from 'html-webpack-plugin'
 import * as WebpackCleanup from 'webpack-cleanup-plugin'
 
+import { Lincoln, Logger } from './src/scripts'
+
+class MyPlugin {
+  public apply(compiler: webpack.Compiler): void {
+    compiler.plugin('compilation', (...args: any[]): void => {
+      compiler.plugin('optimize', (): void => {
+        Logger.debug('optimize')
+      })
+    })
+  }
+}
+
 const BUILD: string = process.env.BUILD || 'release'
 
 const env: string = BUILD.toLowerCase() === 'release' ? 'release' : 'debug'
 const root: string = path.resolve(__dirname)
 const config: any = JSON.parse(fs.readFileSync('./package.json').toString())
 
-const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+const ExtractChunks = webpack.optimize.CommonsChunkPlugin
 
-const Html = (name: string): HtmlWebpack.Config => {
-  return {
-    excludeChunks: ['background', 'content', name],
-    filename: `${name}.html`,
-    minify: {
-      caseSensitive: true,
-      collapseWhitespace: true,
-      conservativeCollapse: true,
-      keepClosingSlash: true,
-      minifyCSS: true,
-      minifyJS: true,
-      minifyURLs: true,
-      preserveLineBreaks: true,
-      quoteCharacter: '"',
-      removeComments: true,
-      removeEmptyAttributes: true,
-      removeRedundantAttributes: true,
-      useShortDoctype: true,
-    },
-    template: './src/public/template.html',
-    title: config.name,
-    xhtml: true,
+const HtmlWebpackFiles = [
+  'options',
+  'popup',
+]
+
+const CreateHtmlWebpackFiles = (): HtmlWebpack[] => {
+  const options = (name: string) => {
+    const inclusions = HtmlWebpackFiles.filter(
+      (filename: string) => name.toLowerCase() !== filename.toLowerCase()
+    )
+
+    return {
+      excludeChunks: ['background', 'content', ...inclusions],
+      filename: `${name}.html`,
+      minify: {
+        caseSensitive: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        keepClosingSlash: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        preserveLineBreaks: true,
+        quoteCharacter: '"',
+        removeComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+      },
+      template: './src/public/template.html',
+      title: config.name,
+      xhtml: true,
+    }
   }
+
+  return HtmlWebpackFiles.map((name: string) => new HtmlWebpack(options(name)))
 }
 
 const configuration: webpack.Configuration = {
   cache: env === 'release',
   context: root,
   entry: {
-    background: './src/scripts/background.ts',
-    content: './src/scripts/content.ts',
+    background: './src/scripts/Pages/background.ts',
+    content: './src/scripts/Pages/content.ts',
     options: './src/public/options.tsx',
     popup: './src/public/popup.tsx',
     vendor: Object.keys(config.dependencies),
@@ -92,15 +117,14 @@ const configuration: webpack.Configuration = {
   },
   plugins: [
     new CleanWebpack(['.nyc_output', 'coverage', 'dist']),
-    new CommonsChunkPlugin({
+    new ExtractChunks({
       minChunks: Infinity,
       name: 'vendor',
     }),
     new ExtractText({
       filename: 'styles.css',
     }),
-    new HtmlWebpack(Html('options')),
-    new HtmlWebpack(Html('popup')),
+    ...CreateHtmlWebpackFiles()
   ],
   resolve: {
     extensions: ['.js', '.scss', '.ts', '.tsx']

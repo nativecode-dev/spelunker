@@ -18,8 +18,9 @@
       160
     ],
     "new-parens": true,
-    "no-var-keyword": true,
+    "no-bitwise": false,
     "no-unused-expression": true,
+    "no-var-keyword": true,
     "only-arrow-functions": [
       true
     ],

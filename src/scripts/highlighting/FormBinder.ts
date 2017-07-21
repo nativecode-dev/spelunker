@@ -1,8 +1,7 @@
-import hash = require('string-hash')
-
 import * as JQuery from 'jquery'
 import * as uuid from 'uuidjs'
 
+import { StringHash } from '../utils'
 import { FormHighlighter } from './FormHighlighter'
 
 const BUTTON: string = 'button'
@@ -20,7 +19,7 @@ const syntheticId = (element: HTMLElement) => {
   const url: string = document.URL
 
   const canon: string[] = [id, name, url]
-  return btoa(hash(canon.join('::')).toString())
+  return btoa(StringHash(canon.join('::')).toString())
 }
 
 export class FormBinder {

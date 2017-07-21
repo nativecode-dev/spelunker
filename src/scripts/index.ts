@@ -1,2 +1,3 @@
-export * from './chrome'
-export * from './highlighting'
+export * from './Chrome'
+export * from './Highlighting'
+export * from './Logging'
