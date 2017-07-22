@@ -1,12 +1,23 @@
-import { FormHighlighter, FormHighlighters, Logger, Message, Messenger, Response } from '../scripts/Index'
+import * as nc from '../scripts/Index'
 
-type Sender = chrome.runtime.MessageSender
-type Responder = (response: any) => void
+const BackgroundId = 'background'
+const ContentId = 'content'
 
-type OnMessage = (message: any, sender: Sender, responder: Responder) => void
+export class Content {
+  private readonly initiator: nc.PortInitiator
+  private readonly log: nc.Lincoln = nc.Logger.extend(ContentId)
+  private readonly options: any = { name: ContentId }
+  constructor() {
+    this.initiator = new nc.PortInitiator(this.factory)
+    this.initiator.send({
+      body: { event: 'loaded', url: window.location.toString() },
+      recipient: BackgroundId,
+      sender: ContentId,
+      type: nc.MessageType.Notification,
+    })
+  }
 
-const handler: OnMessage = (message, sender, responder) => {
-  responder('content')
+  private readonly factory = () => chrome.runtime.connect(this.options)
 }
 
-chrome.runtime.onMessage.addListener(handler)
+export default new Content()

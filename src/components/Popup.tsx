@@ -1,18 +1,18 @@
 import * as JQuery from 'jquery'
 import * as React from 'react'
 
-import { Lincoln, Logger, Message, Messenger, Response } from '../scripts/Index'
+import * as nc from '../scripts/Index'
 
 export interface IProperties {
   title: string
 }
 
 export class Popup extends React.Component<IProperties, {}> {
-  private log: Lincoln
+  private log: nc.Lincoln
 
   constructor() {
     super()
-    this.log = Logger.extend('popup') || Logger
+    this.log = nc.Logger.extend('popup') || nc.Logger
   }
 
   public render() {

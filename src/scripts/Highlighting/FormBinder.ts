@@ -23,9 +23,9 @@ const syntheticId = (element: HTMLElement) => {
 }
 
 export class FormBinder {
-  private form: HTMLElement
-  private synthId: string
-  private $form: JQuery<HTMLElement>
+  private readonly form: HTMLElement
+  private readonly synthId: string
+  private readonly $form: JQuery<HTMLElement>
 
   constructor(form: HTMLElement) {
     this.form = form
