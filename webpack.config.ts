@@ -8,17 +8,6 @@ import * as HtmlWebpack from 'html-webpack-plugin'
 import * as JsonPostProcess from 'json-post-process-webpack-plugin'
 import * as WebpackCleanup from 'webpack-cleanup-plugin'
 
-class MyPlugin {
-  private log = console.log
-  public apply(compiler: webpack.Compiler): void {
-    compiler.plugin('compilation', (...args: any[]): void => {
-      compiler.plugin('optimize', (): void => {
-        this.log('OPTIMIZE')
-      })
-    })
-  }
-}
-
 const BUILD: string = process.env.BUILD || 'release'
 
 const env: string = BUILD.toLowerCase() === 'release' ? 'release' : 'debug'
@@ -68,6 +57,7 @@ const CreateHtmlWebpackFiles = (): HtmlWebpack[] => {
 const configuration: webpack.Configuration = {
   cache: env === 'release',
   context: root,
+  devtool: BUILD === 'release' ? 'nosources-source-map' : 'source-map',
   entry: {
     background: './src/public/background.ts',
     content: './src/public/content.ts',
@@ -109,6 +99,11 @@ const configuration: webpack.Configuration = {
       exclude: /node_modules/,
       test: /\.js$/,
       use: 'source-map-loader'
+    }, {
+      enforce: 'pre',
+      exclude: /node_modules/,
+      test: /\.ts$/,
+      use: 'source-map-loader'
     }],
   },
   output: {
@@ -138,7 +133,7 @@ const configuration: webpack.Configuration = {
     ...CreateHtmlWebpackFiles()
   ],
   resolve: {
-    extensions: ['.js', '.scss', '.ts', '.tsx']
+    extensions: ['.js', '.ts', '.tsx']
   }
 }
 

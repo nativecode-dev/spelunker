@@ -1,5 +1,7 @@
 import * as Promise from 'bluebird'
 
+import { Logger } from '../Logging'
+
 export interface Message {
   body: any
   from: string
@@ -12,7 +14,6 @@ export interface Response {
   from: string
   message: Message
   to: string
-  type: string | null
 }
 
 export class Messenger {
@@ -22,14 +23,16 @@ export class Messenger {
 
   public static sendAsync<T extends Message>(message: T): Promise<Response> {
     return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage(message, ((response): void => {
-        resolve({
+      Logger.debug(`sending message "${message.id}"`, message)
+      chrome.runtime.sendMessage(message, ((response: any): void => {
+        Logger.debug(`repling to "${message.id}"`, response)
+        const reply: Response = {
           body: response,
           from: message.to,
           message,
           to: message.from,
-          type: response.type || null,
-        })
+        }
+        resolve(reply)
       }))
     })
   }

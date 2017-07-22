@@ -1,8 +1,12 @@
-import { FormHighlighter, FormHighlighters } from '../scripts/Index'
+import { FormHighlighter, FormHighlighters, Logger, Message, Messenger, Response } from '../scripts/Index'
 
-const log = console.log
-const highlighters: FormHighlighter[] = FormHighlighters()
+type Sender = chrome.runtime.MessageSender
+type Responder = (response: any) => void
 
-for (const highlighter of highlighters) {
-  log(highlighter)
+type OnMessage = (message: any, sender: Sender, responder: Responder) => void
+
+const handler: OnMessage = (message, sender, responder) => {
+  responder('content')
 }
+
+chrome.runtime.onMessage.addListener(handler)

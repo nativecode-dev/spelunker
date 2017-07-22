@@ -68,7 +68,7 @@
     "webpack-cleanup-plugin": "^0.5.1"
   },
   "scripts": {
-    "build": "cross-env BUILD=release webpack",
+    "build": "cross-env webpack",
     "prebuild": "npm run lint",
     "lint": "tslint src/",
     "test": "cross-env DEBUG= nyc mocha --recursive tests/",
@@ -76,7 +76,7 @@
     "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
     "precoverage": "npm run build",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "watch": "cross-env BUILD=release webpack -w",
+    "watch": "cross-env webpack -w",
     "prewatch": "npm run build"
   }
 }
