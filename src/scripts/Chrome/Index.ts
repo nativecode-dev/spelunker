@@ -1,5 +1,5 @@
-export * from './PortClient'
-export * from './PortInitiator'
+export * from './MessageClient'
+export * from './MessageServer'
 
 export type InstalledDetails = chrome.runtime.InstalledDetails
 export type UpdateCheckDetails = chrome.runtime.UpdateCheckDetails
@@ -15,21 +15,24 @@ export type OnMessageHandler = (message: object, port: chrome.runtime.Port) => v
 export type OnConnectHandler = (port: chrome.runtime.Port) => void
 export type OnDisconnectHandler = (port: chrome.runtime.Port) => void
 
-export interface Message {
-  body: any
+export interface Envelope {
   recipient: string
   sender: string
-  type: MessageType
+  tag: string
 }
 
-export enum MessageType {
-  Acknowledgement,
-  Notification,
+export interface Message<T> extends Envelope {
+  body: T
+  id: string
 }
 
-export interface Response {
-  body: any
-  recipient: string
-  sender: string
-  type: MessageType
+export interface MessageFilter {
+  recipient?: string
+  sender?: string
+  tag?: string
+}
+
+export interface Response extends Envelope {
+  errors: string[]
+  messageId: string
 }

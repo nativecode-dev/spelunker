@@ -6,22 +6,18 @@ import '../assets/icon-64.png'
 import '../assets/icon.png'
 import './manifest.json'
 
+import * as types from './types'
+
 import * as nc from '../scripts/Index'
 
 const BackgroundId = 'background'
 
 class Background {
-  private readonly client: nc.PortClient = new nc.PortClient((message) => this.onMessage(message))
   private readonly log: nc.Lincoln = nc.Logger.extend(BackgroundId)
-
-  private onMessage(message: nc.Message): nc.Response {
-    this.log.debug('onMessage', message)
-    return {
-      body: { url: message.body.url },
-      recipient: message.sender,
-      sender: message.recipient || BackgroundId,
-      type: nc.MessageType.Acknowledgement,
-    }
+  private readonly server: nc.MessageServer
+  constructor() {
+    this.server = new nc.MessageServer()
+    this.server.handle<types.ContentLoaded>('@background', (message: types.ContentLoaded) => this.log.debug(message))
   }
 }
 

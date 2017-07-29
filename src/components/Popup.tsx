@@ -1,13 +1,15 @@
 import * as JQuery from 'jquery'
 import * as React from 'react'
-
 import * as nc from '../scripts/Index'
 
-export interface IProperties {
-  title: string
+import { ComponentProperties } from './ComponentProperties'
+
+export interface PopupProperties extends ComponentProperties {
+  allowPrinting?: boolean
+  allowPrintingToPdf?: boolean
 }
 
-export class Popup extends React.Component<IProperties, {}> {
+export class Popup extends React.Component<PopupProperties, {}> {
   private log: nc.Lincoln
 
   constructor() {

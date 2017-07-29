@@ -1,10 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface IProperties {
-  title: string
+import { ComponentProperties } from './ComponentProperties'
+
+export interface OptionsProperties extends ComponentProperties {
+  filters?: {
+    blacklist: string[],
+    whitelist: string[],
+  }
 }
 
-export class Options extends React.Component<IProperties, {}> {
+export class Options extends React.Component<OptionsProperties, {}> {
   public render() {
     return (
       <h1>Options</h1>
