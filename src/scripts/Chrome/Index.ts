@@ -1,5 +1,6 @@
 export * from './MessageClient'
 export * from './MessageServer'
+export * from './Printer'
 
 export type InstalledDetails = chrome.runtime.InstalledDetails
 export type UpdateCheckDetails = chrome.runtime.UpdateCheckDetails

@@ -1,3 +1,5 @@
+
+import * as JQuery from 'jquery'
 import * as nc from '../scripts/Index'
 import * as types from './types'
 
