@@ -6,13 +6,12 @@ import '../assets/icon-64.png'
 import '../assets/icon.png'
 import './manifest.json'
 
-import * as types from './types'
-
 import * as nc from '../scripts/Index'
+import * as types from './types'
 
 const BackgroundId = 'background'
 
-class Background {
+export class Background {
   private readonly log: nc.Lincoln = nc.Logger.extend(BackgroundId)
   private readonly server: nc.MessageServer
   constructor() {
