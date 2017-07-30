@@ -12,9 +12,9 @@ export class Content {
   private readonly options: any = { name: ContentId }
   constructor() {
     this.client = new nc.MessageClient(this.factory)
-    const message = { url: window.location.toString() }
-    this.client.send<types.ContentLoaded>(message, BackgroundId, ContentId)
-    this.client.send<string>('test', '*', ContentId)
+    if (window.location.hostname === 'app.proplogix.com') {
+      this.client.send<string>(window.location.hostname, BackgroundId, ContentId)
+    }
   }
 
   private readonly factory = () => chrome.runtime.connect(this.options)

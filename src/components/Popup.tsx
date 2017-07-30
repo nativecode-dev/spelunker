@@ -5,8 +5,7 @@ import * as nc from '../scripts/Index'
 import { ComponentProperties } from './ComponentProperties'
 
 export interface PopupProperties extends ComponentProperties {
-  allowPrinting?: boolean
-  allowPrintingToPdf?: boolean
+  temp?: boolean
 }
 
 export class Popup extends React.Component<PopupProperties, {}> {

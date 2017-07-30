@@ -1,8 +1,3 @@
-import '../assets/icon-16.png'
-import '../assets/icon-24.png'
-import '../assets/icon-32.png'
-import '../assets/icon-48.png'
-import '../assets/icon-64.png'
 import '../assets/icon.png'
 import './manifest.json'
 
@@ -20,7 +15,9 @@ export class Background {
     this.log = nc.Logger.extend(BackgroundId)
     this.printer = new nc.Printer('spelunker', 'Spelunker', (job: nc.PrintJob): void => this.printed(job))
     this.server = new nc.MessageServer()
-    this.server.handle<types.ContentLoaded>('@background', (message: types.ContentLoaded) => this.log.debug(message))
+    this.server.handle<string>(`@${BackgroundId}`, (message: any) => {
+      this.log.debug(message)
+    })
   }
 
   private printed(job: nc.PrintJob): void {

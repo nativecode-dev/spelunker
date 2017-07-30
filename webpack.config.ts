@@ -82,7 +82,11 @@ const configuration: webpack.Configuration = {
     }, {
       exclude: /node_modules/,
       test: /\.png$/,
-      use: ['file-loader?name=icons/[name].[ext]', 'img-loader']
+      use: [
+        'srcset-loader?sizes=16w+24w+32w+48w+64w+128w',
+        'image-size-loader?name=icons/[name]-[width].[ext]',
+        'image-webpack-loader?bypassOnDebug',
+      ]
     }, {
       exclude: /node_modules/,
       test: /\.scss$/,
