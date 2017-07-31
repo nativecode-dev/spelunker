@@ -76,7 +76,7 @@
     "lint": "tslint src/",
     "test": "cross-env DEBUG= nyc mocha --opts mocha.opts",
     "pretest": "npm run build",
-    "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --recursive tests/",
+    "coverage": "cross-env DEBUG= nyc --reporter=teamcity mocha --opts mocha.opts",
     "precoverage": "npm run build",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "watch": "cross-env webpack -w",
